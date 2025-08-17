@@ -9,7 +9,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { defineTheme } from "../lib/defineTheme";
 import useKeyPress from "../hooks/useKeyPress";
-import Footer from "./Footer";
 import OutputWindow from "./OutputWindow";
 import CustomInput from "./CustomInput";
 import OutputDetails from "./OutputDetails";
@@ -61,7 +60,14 @@ const Landing = () => {
   };
 
   function handleThemeChange(th) {
-    // We will come to the implementation later in the code
+    const theme = th;
+    console.log("theme...", theme);
+
+    if (["light", "vs-dark"].includes(theme.value)) {
+      setTheme(theme);
+    } else {
+      defineTheme(theme.value).then((_) => setTheme(theme));
+    }
   }
   useEffect(() => {
     defineTheme("oceanic-next").then((_) =>
@@ -145,7 +151,6 @@ const Landing = () => {
           {outputDetails && <OutputDetails outputDetails={outputDetails} />}
         </div>
       </div>
-      <Footer />
     </>
   );
 };
